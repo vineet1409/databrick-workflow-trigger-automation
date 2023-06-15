@@ -29,7 +29,7 @@ class Task:
         if response.status_code == 200:
             print(f'Job {self.job_id} triggered successfully!')
 
-            run_id = response.json()['run_id']
+            '''run_id = response.json()['run_id']
             run_status_url = f'https://{self.instance_url}/api/2.0/jobs/runs/get?run_id={run_id}'
 
             while True:
@@ -40,7 +40,9 @@ class Task:
                     print(f'Job {self.job_id} completed!')
                     return 'success'
 
-                sleep(25)  # Adjust the polling interval as needed
+                sleep(25)  # Adjust the polling interval as needed'''
+            
+            return 'success'
 
         else:
             print(f'Failed to trigger job {self.job_id}:', response.text)

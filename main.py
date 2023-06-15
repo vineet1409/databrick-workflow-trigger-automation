@@ -3,13 +3,17 @@ from auto_trigger.tasks.data_ingestion_task import data_ingestion_task
 from auto_trigger.tasks.prediction_task import prediction_task
 from auto_trigger.tasks.evaluation_task import evaluation_task
 from auto_trigger.configuration.constants import config
+from auto_trigger.configuration.create_config_enviornment import create_enviornment
+
+import argparse
     
 instance_url = config['databricks-instance']
 api_token = config['databricks-token']
 
+
+
 @data_ingestion_task
 def data_ingestion(task):
-    print('inside data ingestion-1')
     flag = task.execute()
     return flag
 
@@ -34,4 +38,10 @@ class MyWorkflow(Workflow):
         
 
 if __name__ == "__main__":
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--update_cluster", action="store_true", help="Update cluster configuration")
+    args = parser.parse_args()
+
+    create_enviornment(instance_url,api_token,args)
     workflow = MyWorkflow()
