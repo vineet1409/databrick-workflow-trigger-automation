@@ -1,6 +1,7 @@
 import requests
 import json
 from time import sleep
+from auto_trigger.logger.mlflow_logger import log_to_mlflow
 
 class Task:
     def __init__(self, instance_url, api_token,job_id):
@@ -8,6 +9,7 @@ class Task:
         self.api_token = api_token
         self.job_id = job_id
         print('self.job_id is',self.job_id)
+        
 
     def execute(self):
         print("Executing task...")
@@ -42,6 +44,8 @@ class Task:
 
                 sleep(25)  # Adjust the polling interval as needed'''
             
+            log_to_mlflow(params={'job-id':self.job_id,'status':'success'}) 
+               
             return 'success'
 
         else:

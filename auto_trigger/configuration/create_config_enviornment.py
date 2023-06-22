@@ -3,6 +3,7 @@ import time
 import argparse
 
 from auto_trigger.configuration.constants import config
+from auto_trigger.logger.mlflow_logger import log_to_mlflow
 
 
 
@@ -62,6 +63,14 @@ def create_enviornment(instance_url,token,args):
             print("Current Cluster Min Workers:", cluster_info["autoscale"]["min_workers"])
             print("Current Cluster Max Workers:", cluster_info["autoscale"]["max_workers"])
             print("\n")
+            current_cluster_config = {'Cluster ID':cluster_info["cluster_id"],
+                                      'Cluster Name':cluster_info["cluster_name"],
+                                      'Current Cluster Spark':cluster_info["spark_version"],
+                                      'Current Cluster Min Workers':cluster_info["autoscale"]["min_workers"],
+                                      'Current Cluster Max Workers':cluster_info["autoscale"]["max_workers"]
+                                      }
+            log_to_mlflow(params=current_cluster_config)
+            
 
             if args.update_cluster:
                 # Update cluster configuration
@@ -94,8 +103,6 @@ def create_enviornment(instance_url,token,args):
                         print("Failed to retrieve updated cluster information. Status code:", response.status_code)
                 else:
                     print("Failed to initiate cluster configuration update. Status code:", response.status_code)
-            else:
-                print("Skipping cluster configuration update.")
 
         else:
             print("Failed to retrieve cluster information. Status code:", response.status_code)

@@ -2,7 +2,7 @@ import logging
 import datetime
 
 def create_logger():
-    logger = logging.getLogger(__name__)
+    '''logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
 
     # Create a file handler
@@ -23,4 +23,6 @@ def create_logger():
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
 
-    return logger
+    return logger'''
+    
+    pass
